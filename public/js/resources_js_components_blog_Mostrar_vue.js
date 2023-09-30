@@ -17,6 +17,18 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "blogs",
+  computed: {
+    info: function info() {
+      // Obtener la cadena JSON de sessionStorage
+      var userData = sessionStorage.getItem("user");
+
+      // Parsear la cadena JSON en un objeto JavaScript
+      var userObject = JSON.parse(userData);
+
+      // Acceder a las propiedades del objeto
+      return userObject;
+    }
+  },
   data: function data() {
     return {
       blogs: []
@@ -33,7 +45,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _this.axios.get('/api/blog').then(function (response) {
+              return _this.axios.get('/api/blog', {
+                params: {
+                  user_id: _this.info.user_id
+                }
+              }).then(function (response) {
                 _this.blogs = response.data;
               })["catch"](function (error) {
                 console.log(error);
@@ -126,6 +142,7 @@ var staticRenderFns = [function () {
   return _c("thead", {
     staticClass: "thead-dark"
   }, [_c("tr", [_c("th", [_vm._v("ID")]), _vm._v(" "), _c("th", [_vm._v("Titulo")]), _vm._v(" "), _c("th", [_vm._v("Contenido")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center",
     attrs: {
       colspan: "2"
     }

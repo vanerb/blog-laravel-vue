@@ -42,6 +42,18 @@
 
 export default {
    name: "crear-blog",
+   computed:{
+    info() {
+      // Obtener la cadena JSON de sessionStorage
+      const userData = sessionStorage.getItem("user");
+
+      // Parsear la cadena JSON en un objeto JavaScript
+      const userObject = JSON.parse(userData);
+
+      // Acceder a las propiedades del objeto
+      return userObject;
+    }
+   },
    data(){
     return{
         blog:{
@@ -51,14 +63,16 @@ export default {
     }
    },
    methods: {
-   async crear(){
-        await this.axios.post('/api/blog', this.blog)
+   async crear() {
+    this.blog.user_id = this.info.user_id;
+    await this.axios.post('/api/blog', this.blog)
         .then((response) => {
-            this.$router.push({name: "mostrarBlogs"})
-          })
-          .catch((error) => {
+            console.log(this.info.user_id);
+            this.$router.push({ name: "mostrarBlogs" });
+        })
+        .catch((error) => {
             console.log(error);
-          });
+        });
     }
    }
 }

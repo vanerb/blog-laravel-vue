@@ -39,6 +39,18 @@
 <script>
 export default {
    name: "editar-blog",
+   computed:{
+    info() {
+      // Obtener la cadena JSON de sessionStorage
+      const userData = sessionStorage.getItem("user");
+
+      // Parsear la cadena JSON en un objeto JavaScript
+      const userObject = JSON.parse(userData);
+
+      // Acceder a las propiedades del objeto
+      return userObject;
+    }
+   },
    data(){
     return{
         blog:{
@@ -63,6 +75,7 @@ export default {
         })
     },
     async actualizar(){
+        this.blog.user_id = this.info.user_id;
         this.axios.put(`/api/blog/${this.$route.params.id}`, this.blog).then(response=>{
             this.$router.push({
                 name: "mostrarBlogs"

@@ -17,6 +17,18 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "crear-blog",
+  computed: {
+    info: function info() {
+      // Obtener la cadena JSON de sessionStorage
+      var userData = sessionStorage.getItem("user");
+
+      // Parsear la cadena JSON en un objeto JavaScript
+      var userObject = JSON.parse(userData);
+
+      // Acceder a las propiedades del objeto
+      return userObject;
+    }
+  },
   data: function data() {
     return {
       blog: {
@@ -32,15 +44,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _this.blog.user_id = _this.info.user_id;
+              _context.next = 3;
               return _this.axios.post('/api/blog', _this.blog).then(function (response) {
+                console.log(_this.info.user_id);
                 _this.$router.push({
                   name: "mostrarBlogs"
                 });
               })["catch"](function (error) {
                 console.log(error);
               });
-            case 2:
+            case 3:
             case "end":
               return _context.stop();
           }

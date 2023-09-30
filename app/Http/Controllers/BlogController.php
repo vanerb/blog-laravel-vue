@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::all();
-        return response()->json($blogs);
+        // Obten el user_id de los parámetros de consulta
+    $user_id = $request->input('user_id');
+
+    // Consulta los blogs que coincidan con el user_id
+    $blogs = Blog::where('user_id', $user_id)->get();
+
+    return response()->json($blogs);
     }
 
     
@@ -24,6 +30,7 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $blog = Blog::create($request->post());
+        $user = Auth::user();
         return response()->json([
             'blog'=>$blog
         ]);
@@ -43,7 +50,9 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
+        $user = Auth::user();
         $blog->fill($request->post())->save();
+       
         return response()->json([
             'blog'=>$blog
         ]);

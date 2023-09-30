@@ -15,7 +15,7 @@
               <th>ID</th>
               <th>Titulo</th>
               <th>Contenido</th>
-              <th colspan="2">Acciones</th>
+              <th colspan="2" class="text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -50,6 +50,18 @@
 <script>
 export default {
   name: "blogs",
+  computed:{
+    info() {
+      // Obtener la cadena JSON de sessionStorage
+      const userData = sessionStorage.getItem("user");
+
+      // Parsear la cadena JSON en un objeto JavaScript
+      const userObject = JSON.parse(userData);
+
+      // Acceder a las propiedades del objeto
+      return userObject;
+    }
+   },
   data() {
     return {
       blogs: [],
@@ -60,7 +72,7 @@ export default {
   },
   methods: {
     async mostrarBlogs(){
-            await this.axios.get('/api/blog').then(response=>{
+            await this.axios.get('/api/blog', {params: { user_id: this.info.user_id }}).then(response=>{
                 this.blogs = response.data
             }).catch(error=>{
                 console.log(error)
