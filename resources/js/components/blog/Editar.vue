@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -13,13 +13,15 @@
                             <div class="col-md-12 mt-2">
                                 <div class="form-group">
                                     <label>Titulo</label>
-                                    <input type="text" class="form-control" v-model="blog.title">
+                                    <input type="text" class="form-control" v-model="blog.title" >
                                 </div>
                             </div>
 
                             <div class="col-md-12 mt-2">
                                  <div class="form-floating">
-                                    <textarea class="form-control" cols="30" rows="10" v-model="blog.content"></textarea>
+                                    <textarea class="form-control" v-model="blog.content" v-autosize-textarea>
+
+                                    </textarea>
                                     <label>Contenido</label>
                                 </div>
                             </div>
@@ -37,8 +39,22 @@
 </div>
 </template>
 <script>
+import autosize from 'autosize';
 export default {
    name: "editar-blog",
+   directives: {
+    autosizeTextarea: {
+      inserted: function (el) {
+        autosize(el);
+      },
+      update: function (el) {
+        autosize.update(el);
+      },
+      unbind: function (el) {
+        autosize.destroy(el);
+      }
+    }
+  },
    computed:{
     info() {
       // Obtener la cadena JSON de sessionStorage
@@ -53,6 +69,7 @@ export default {
    },
    data(){
     return{
+        textareaHeight: 'auto',
         blog:{
             title:"",
             content:""
@@ -63,6 +80,7 @@ export default {
     this.mostrarBlog();
    },
    methods:{
+    
     async mostrarBlog(){
         this.axios.get(`/api/blog/${this.$route.params.id}`).then(
             response=>{

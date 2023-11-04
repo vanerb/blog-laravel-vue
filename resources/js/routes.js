@@ -3,6 +3,8 @@ const Contacto = () => import('./components/Contacto.vue')
 
 
 const Mostrar = () => import('./components/blog/Mostrar.vue')
+const Detalle = () => import('./components/blog/Detalle.vue')
+const DetalleAdmin = () => import('./components/blog/MostrarAdmin.vue')
 const Editar = () => import('./components/blog/Editar.vue')
 const Crear = () => import('./components/blog/Crear.vue')
 const Login = () => import('./components/user/Login.vue')
@@ -59,8 +61,34 @@ export const routes = [
             next('/login'); // El usuario no está autenticado, redirige a la página de inicio de sesión
           }
         }
-     }
-     ,{
+     },
+     {
+      name: 'detalleBlog',
+      path: '/detalle/:id',
+      component: Detalle,
+      beforeEnter: (to, from, next) => {
+        // Verifica si el usuario está autenticado antes de acceder a la ruta Editar
+        if (sessionStorage.getItem('user')) {
+          next(); // El usuario está autenticado, continúa
+        } else {
+          next('/login'); // El usuario no está autenticado, redirige a la página de inicio de sesión
+        }
+      }
+    },
+    {
+      name: 'verAdminBlog',
+      path: '/adminblog',
+      component: DetalleAdmin,
+      beforeEnter: (to, from, next) => {
+        // Verifica si el usuario está autenticado antes de acceder a la ruta Editar
+        if (sessionStorage.getItem('user')) {
+          next(); // El usuario está autenticado, continúa
+        } else {
+          next('/login'); // El usuario no está autenticado, redirige a la página de inicio de sesión
+        }
+      }
+    },
+     {
         name:'login',
         path: '/login',
         component: Login

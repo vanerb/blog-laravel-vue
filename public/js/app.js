@@ -2178,14 +2178,12 @@ var render = function render() {
     on: {
       click: _vm.redirectToRegister
     }
-  }, [_vm._v("Registrarse")])]) : _vm._e(), _vm._v(" "), _vm.isLoggedIn ? _c("li", {
-    staticClass: "nav-item"
-  }, [_c("a", {
+  }, [_vm._v("Registrarse")])]) : _vm._e(), _vm._v(" "), _vm.isLoggedIn ? _c("li", [_c("a", {
     staticClass: "nav-link btn btn-link",
-    on: {
-      click: _vm.logout
+    attrs: {
+      href: "/adminblog"
     }
-  }, [_vm._v("Cerrar Sesión")])]) : _vm._e(), _vm._v(" "), _vm.isLoggedIn ? _c("li", [_c("a", {
+  }, [_vm._v(" Administrar")])]) : _vm._e(), _vm._v(" "), _vm.isLoggedIn ? _c("li", [_c("a", {
     staticClass: "nav-link btn btn-link",
     attrs: {
       href: "/"
@@ -2200,7 +2198,14 @@ var render = function render() {
     attrs: {
       d: "M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
     }
-  })]), _vm._v(" " + _vm._s(_vm.info.user.name))])]) : _vm._e()])])]), _vm._v(" "), _c("div", [_c("router-view")], 1)]);
+  })]), _vm._v(" " + _vm._s(_vm.info.user.name))])]) : _vm._e(), _vm._v(" "), _vm.isLoggedIn ? _c("li", {
+    staticClass: "nav-item"
+  }, [_c("a", {
+    staticClass: "nav-link btn btn-link",
+    on: {
+      click: _vm.logout
+    }
+  }, [_vm._v("Cerrar Sesión")])]) : _vm._e()])])]), _vm._v(" "), _c("div", [_c("router-view")], 1)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -2333,6 +2338,12 @@ var Contacto = function Contacto() {
 var Mostrar = function Mostrar() {
   return __webpack_require__.e(/*! import() */ "resources_js_components_blog_Mostrar_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/blog/Mostrar.vue */ "./resources/js/components/blog/Mostrar.vue"));
 };
+var Detalle = function Detalle() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_blog_Detalle_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/blog/Detalle.vue */ "./resources/js/components/blog/Detalle.vue"));
+};
+var DetalleAdmin = function DetalleAdmin() {
+  return __webpack_require__.e(/*! import() */ "resources_js_components_blog_MostrarAdmin_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/blog/MostrarAdmin.vue */ "./resources/js/components/blog/MostrarAdmin.vue"));
+};
 var Editar = function Editar() {
   return __webpack_require__.e(/*! import() */ "resources_js_components_blog_Editar_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/blog/Editar.vue */ "./resources/js/components/blog/Editar.vue"));
 };
@@ -2384,6 +2395,30 @@ var routes = [{
   name: 'editarBlog',
   path: '/editar/:id',
   component: Editar,
+  beforeEnter: function beforeEnter(to, from, next) {
+    // Verifica si el usuario está autenticado antes de acceder a la ruta Editar
+    if (sessionStorage.getItem('user')) {
+      next(); // El usuario está autenticado, continúa
+    } else {
+      next('/login'); // El usuario no está autenticado, redirige a la página de inicio de sesión
+    }
+  }
+}, {
+  name: 'detalleBlog',
+  path: '/detalle/:id',
+  component: Detalle,
+  beforeEnter: function beforeEnter(to, from, next) {
+    // Verifica si el usuario está autenticado antes de acceder a la ruta Editar
+    if (sessionStorage.getItem('user')) {
+      next(); // El usuario está autenticado, continúa
+    } else {
+      next('/login'); // El usuario no está autenticado, redirige a la página de inicio de sesión
+    }
+  }
+}, {
+  name: 'verAdminBlog',
+  path: '/adminblog',
+  component: DetalleAdmin,
   beforeEnter: function beforeEnter(to, from, next) {
     // Verifica si el usuario está autenticado antes de acceder a la ruta Editar
     if (sessionStorage.getItem('user')) {
@@ -18057,7 +18092,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_Contacto_vue":1,"resources_js_components_blog_Mostrar_vue":1,"resources_js_components_blog_Editar_vue":1,"resources_js_components_blog_Crear_vue":1,"resources_js_components_user_Login_vue":1,"resources_js_components_user_Register_vue":1,"resources_js_components_user_Logout_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Home_vue":1,"resources_js_components_Contacto_vue":1,"resources_js_components_blog_Mostrar_vue":1,"resources_js_components_blog_Detalle_vue":1,"resources_js_components_blog_MostrarAdmin_vue":1,"resources_js_components_blog_Editar_vue":1,"resources_js_components_blog_Crear_vue":1,"resources_js_components_user_Login_vue":1,"resources_js_components_user_Register_vue":1,"resources_js_components_user_Logout_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

@@ -45,7 +45,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _this.axios.get('/api/blog', {
+              return _this.axios.get("/api/blog", {
                 params: {
                   user_id: _this.info.user_id
                 }
@@ -94,7 +94,7 @@ var render = function render() {
   return _c("div", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "row"
+    staticClass: "row mt-4"
   }, [_c("div", {
     staticClass: "col-md-12 mb-4"
   }, [_c("router-link", {
@@ -106,48 +106,35 @@ var render = function render() {
     }
   }, [_vm._v("Nuevo")])], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
-  }, [_c("div", {
-    staticClass: "table-responsive"
-  }, [_c("table", {
-    staticClass: "table table-striped table-dark"
-  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.blogs, function (blog) {
-    return _c("tr", {
-      key: blog.id
-    }, [_c("td", [_vm._v(_vm._s(blog.id))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(blog.title))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(blog.content))]), _vm._v(" "), _c("td", [_c("router-link", {
-      staticClass: "btn btn-success",
+  }, _vm._l(_vm.blogs, function (blog) {
+    return _c("div", {
+      key: blog.id,
+      staticClass: "card"
+    }, [_c("div", {
+      staticClass: "card-header"
+    }, [_c("h1", [_vm._v(_vm._s(blog.title))])]), _vm._v(" "), _c("div", {
+      staticClass: "card-body",
+      staticStyle: {
+        overflow: "hidden",
+        "text-overflow": "ellipsis",
+        "white-space": "nowrap"
+      }
+    }, [_vm._v("\n                    " + _vm._s(blog.content) + "\n                ")]), _vm._v(" "), _c("div", {
+      staticClass: "card-footer"
+    }, [_c("router-link", {
+      staticClass: "btn btn-primary",
       attrs: {
         to: {
-          name: "editarBlog",
+          name: "detalleBlog",
           params: {
             id: blog.id
           }
         }
       }
-    }, [_vm._v("Editar")])], 1), _vm._v(" "), _c("td", [_c("a", {
-      staticClass: "btn btn-danger",
-      attrs: {
-        type: "button"
-      },
-      on: {
-        click: function click($event) {
-          return _vm.borrarBlog(blog.id);
-        }
-      }
-    }, [_vm._v("Eliminar")])])]);
-  }), 0)])])])])]);
+    }, [_vm._v("Ver más")])], 1)]);
+  }), 0)])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("thead", {
-    staticClass: "thead-dark"
-  }, [_c("tr", [_c("th", [_vm._v("ID")]), _vm._v(" "), _c("th", [_vm._v("Titulo")]), _vm._v(" "), _c("th", [_vm._v("Contenido")]), _vm._v(" "), _c("th", {
-    staticClass: "text-center",
-    attrs: {
-      colspan: "2"
-    }
-  }, [_vm._v("Acciones")])])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
